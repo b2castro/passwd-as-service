@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+       
+        <script src= "jquery-3.3.1.min.js"></script>
+        <script type="text/javascript">
+         $(document).ready(() => {
+             $('#getUsers').click(() => {
+                console.log("Button Clicked!");
+                $.ajax({
+                  url: 'users',
+                  type: 'GET',
+                  dataType : 'json',
+                  success: (data) => {
+                    console.log('You received some data!', data);
+                    $('#statusUsers').html(JSON.stringify(data));  
+                  },
+                }); 
+             });
+         });
+        </script>
+        <style>
+            #statusUsers{
+                margin: 10px 10px 5px 5px;
+                font-size: 25px;
+            }
+            
+            .buttonService{
+                display: flex;
+                flex-direction: row;
+            }
+            .queryFields{
+                display: flex;
+                text-align: center;
+                justify-content: center;
+                
+            }
+            .container{
+                display: flex;
+                float:left;
+                flex-direction: column;
+            }
+            .myButton { 
+            margin-right: 10px;    
+            margin-top: 10px;
+            display:block;
+            float:left;    
+            box-shadow:inset 0px 1px 0px 0px #ffffff;
+            box-shadow:inset 0px 1px 0px 0px #ffffff;
+            box-shadow:inset 0px 1px 0px 0px #ffffff;
+            background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ffffff), color-stop(1, #f6f6f6));
+            background:linear-gradient(top, #ffffff 5%, #f6f6f6 100%);
+            background:linear-gradient(top, #ffffff 5%, #f6f6f6 100%);
+            background:linear-gradient(top, #ffffff 5%, #f6f6f6 100%);
+            background:linear-gradient(top, #ffffff 5%, #f6f6f6 100%);
+            background:linear-gradient(to bottom, #ffffff 5%, #f6f6f6 100%);
+            background-color:#ffffff;
+            border-radius:6px;
+            border-radius:6px;
+            border-radius:6px;
+            border:1px solid #dcdcdc;
+            display:inline-block;
+            cursor:pointer;
+            color:#666666;
+            font-family:Courier New;
+            font-size:28px;
+            font-weight:bold;
+            padding:5px 24px;
+            text-decoration:none;
+            text-shadow:0px 1px 0px #ffffff;
+        }
+        .myButton:hover {
+            background:linear-gradient(top, #f6f6f6 5%, #ffffff 100%);
+            background:linear-gradient(top, #f6f6f6 5%, #ffffff 100%);
+            background:linear-gradient(top, #f6f6f6 5%, #ffffff 100%);
+            background:linear-gradient(top, #f6f6f6 5%, #ffffff 100%);
+            background:linear-gradient(to bottom, #f6f6f6 5%, #ffffff 100%);
+            background-color:#f6f6f6;
+        }
+        .myButton:active {
+            position:relative;
+            top:1px;
+        }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+             <div class="buttonService">
+             <button id="getUsers" class="myButton">GET /users</button> 
+             <input class="queryFields" type="text" name="Name"  placeholder="NAME">
+             <input class="queryFields" type="text" name="uid"  placeholder="UID">
+             <input class="queryFields" type="text" name="gid"  placeholder="GID">
+             <input class="queryFields" type="text" name="comment"  placeholder="COMMENT">
+             <input class="queryFields" type="text" name="home"  placeholder="HOME">
+             <input class="queryFields" type="text" name="shell"  placeholder="SHELL">     
+             </div>     
+             <div id="statusUsers"></div>
+             <div class="buttonService">   
+             <button class="myButton">GET /groups</button>
+             <input class="queryFields" type="text" name="Name"  placeholder="NAME">
+             <input class="queryFields" type="text" name="gid"  placeholder="GID">
+             <input class="queryFields" type="text" name="member"  placeholder="MEMBER">
+             </div>     
+             <p>Filler Text</p>
+             <p>Filler Text</p>
+        </div>
+        
+    
+    </body>
+</html>
