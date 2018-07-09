@@ -17,10 +17,66 @@
                   },
                 }); 
              });
+             
+              $('#getGroups').click(() => {
+                console.log("Button Clicked!");
+                $.ajax({
+                  url: 'groups',
+                  type: 'GET',
+                  dataType : 'json',
+                  success: (data) => {
+                    console.log('You received some data!', data);
+                    $('#statusGroups').html(JSON.stringify(data));  
+                  },
+                }); 
+             });
+             
+          $('#getUsersId').click(() => {
+            const requestURL = 'users/' + $('#userIdBox').val();
+            console.log('making ajax request to:', requestURL);
+            // From: http://learn.jquery.com/ajax/jquery-ajax-methods/
+            // Using the core $.ajax() method since it's the most flexible.
+            // ($.get() and $.getJSON() are nicer convenience functions)
+            $.ajax({
+              // all URLs are relative to http://localhost:3000/
+              url: requestURL,
+              type: 'GET',
+              dataType : 'json', // this URL returns data in JSON format
+              success: (data) => {
+                  console.log('You received some data!', data);
+                  $('#statusUsersId').html(JSON.stringify(data));
+              },
+            });
+          });    
+             
+        
+          $('#getUsersQuery').click(() => {
+            const requestURL = 'users/' + $('#queryName').val() + $('#queryId').val() + $('#queryGid').val() + $('#queryComment').val() + $('#queryHome').val() + $('#queryShell').val();
+            console.log('making ajax request to:', requestURL);
+            // From: http://learn.jquery.com/ajax/jquery-ajax-methods/
+            // Using the core $.ajax() method since it's the most flexible.
+            // ($.get() and $.getJSON() are nicer convenience functions)
+            $.ajax({
+              // all URLs are relative to http://localhost:3000/
+              url: requestURL,
+              type: 'GET',
+              dataType : 'json', // this URL returns data in JSON format
+              success: (data) => {
+                  console.log('You received some data!', data);
+                  $('#statusUsersQuery').html(JSON.stringify(data));
+              },
+            });
+          });
+             
          });
         </script>
         <style>
             #statusUsers{
+                margin: 10px 10px 5px 5px;
+                font-size: 25px;
+            }
+            
+            #statusGroups{
                 margin: 10px 10px 5px 5px;
                 font-size: 25px;
             }
@@ -63,7 +119,7 @@
             cursor:pointer;
             color:#666666;
             font-family:Courier New;
-            font-size:28px;
+            font-size:100%;
             font-weight:bold;
             padding:5px 24px;
             text-decoration:none;
@@ -86,25 +142,51 @@
     <body>
         <div class="container">
              <div class="buttonService">
-             <button id="getUsers" class="myButton">GET /users</button> 
-             <input class="queryFields" type="text" name="Name"  placeholder="NAME">
-             <input class="queryFields" type="text" name="uid"  placeholder="UID">
-             <input class="queryFields" type="text" name="gid"  placeholder="GID">
-             <input class="queryFields" type="text" name="comment"  placeholder="COMMENT">
-             <input class="queryFields" type="text" name="home"  placeholder="HOME">
-             <input class="queryFields" type="text" name="shell"  placeholder="SHELL">     
-             </div>     
+             <button id="getUsers" class="myButton">GET /users</button>     
+             </div> 
              <div id="statusUsers"></div>
+            
              <div class="buttonService">   
-             <button class="myButton">GET /groups</button>
+             <button id="getGroups" class="myButton">GET /groups</button>
+             </div>
+            <div id="statusGroups"></div>
+            
+              <div class="buttonService">
+             <button id="getUsersId" class="myButton">GET /users/[uid] </button> 
+             <input id="userIdBox" class="queryFields" type="text" name="uid"  placeholder="UID">     
+             </div> 
+             <div id="statusUsersId"></div> 
+            
+              <div class="buttonService">   
+             <button id="getGroups" class="myButton">GET /users/[uid]/groups</button>
+             <input class="queryFields" type="text" name="uid"  placeholder="UID">
+             </div> 
+             <div id="statusGroups"></div>
+            
+            <div class="buttonService">   
+             <button id="getGroups" class="myButton">GET /groups/query</button>
              <input class="queryFields" type="text" name="Name"  placeholder="NAME">
              <input class="queryFields" type="text" name="gid"  placeholder="GID">
              <input class="queryFields" type="text" name="member"  placeholder="MEMBER">
-             </div>     
-             <p>Filler Text</p>
-             <p>Filler Text</p>
-        </div>
-        
-    
+             </div> 
+             <div id="statusGroups"></div>
+            
+              <div class="buttonService">
+             <button id="getUsersQuery" class="myButton">GET /users/query</button> 
+             <input id="queryName" class="queryFields" type="text" name="Name"  placeholder="NAME">
+             <input id="queryId" class="queryFields" type="text" name="uid"  placeholder="UID">
+             <input id="queryGid" class="queryFields" type="text" name="gid"  placeholder="GID">
+             <input id="queryComment" class="queryFields" type="text" name="comment"  placeholder="COMMENT">
+             <input id="queryHome" class="queryFields" type="text" name="home"  placeholder="HOME">
+             <input id="queryShell" class="queryFields" type="text" name="shell"  placeholder="SHELL">     
+             </div> 
+             <div id="statusUsersQuery"></div>
+            
+            
+            
+            
+            
+             
+        </div>    
     </body>
 </html>

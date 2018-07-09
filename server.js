@@ -28,7 +28,36 @@ db.prepare("INSERT OR REPLACE INTO users (name,uid,gid,comment,home,shell) VALUE
     
 }); 
 
- 
+
+var lineReaderGroups = require('readline').createInterface({
+  input: require('fs').createReadStream('etc/groups.txt')
+});
+
+lineReaderGroups.on('line', function (line) {
+let str = line;
+let array = str.split(':');
+    
+dbGroups.prepare("INSERT OR REPLACE INTO groups (name,gid,member) VALUES(?,?,?)").run(array[0],array[2],array[3]).finalize();
+    
+  /* print them out to confirm their contents:
+  dbGroups.each("SELECT name, uid, gid, comment, home, shell FROM groups", (err, row) => {
+      console.log(row.name + ": " + ' - ' + row.gid + ' - ' + row.member);
+  });*/ 
+    
+}); 
+
+app.get('/groups', (req, res) => {
+   
+    
+  // db.all() fetches all results from an SQL query into the 'rows' variable:
+  dbGroups.all('SELECT * FROM groups', (err, rows) => {
+    console.log(rows);
+    const allUsernames = rows.map(e => e);
+    console.log(allUsernames);
+    res.send(allUsernames);
+  });
+});
+
 app.get('/users', (req, res) => {
    
     
@@ -40,6 +69,65 @@ app.get('/users', (req, res) => {
     res.send(allUsernames);
   });
 });
+
+/*
+app.get('/users/:userid', (req, res) => {
+  const idToLookup = req.params.userid; // matches ':userid' above
+   let error404 = "Error 404: User with uid " +idToLookup + " not found";
+  // db.all() fetches all results from an SQL query into the 'rows' variable:
+  db.all(
+    'SELECT * FROM users WHERE uid=$uid',
+    // parameters to SQL query:
+    {
+      $uid: idToLookup
+    },
+    // callback function to run when the query finishes:
+    (err, rows) => {
+      console.log(rows);
+      if (rows.length > 0) {
+        res.send(rows[0]);
+      } else {
+        res.send({error404}); // failed, so return an empty object instead of undefined
+      }
+    }
+  );
+});*/
+
+app.get('users/:name?/:userid?/:gid?/:comment?/:home?/:shell?', (req, res) => {
+  const idToLookup = req.params.userid; // matches ':userid' above
+  const nameToLookup = req.params.name;
+  const gidToLookup = req.params.gid;
+  const commentToLookup = req.params.comment;
+  const homeToLookup = req.params.home;
+  const shellToLookup = req.params.shell;
+    
+   let error404 = "Error 404: User not found";
+  // db.all() fetches all results from an SQL query into the 'rows' variable:
+  db.all(
+    'SELECT * FROM users WHERE name=$name AND uid=$uid',
+    // parameters to SQL query:
+    {
+      $uid: idToLookup,
+      $name: nameToLookup
+      /*$gid:  gidToLookup,
+      $comment: commentToLookup,
+      $home: homeToLookup,
+      $shell: shellToLookup*/
+                 
+    },
+    // callback function to run when the query finishes:
+    (err, rows) => {
+      console.log(rows);
+      if (rows.length > 0) {
+        res.send(rows[0]);
+      } else {
+        res.send({error404}); // failed, so return an empty object instead of undefined
+      }
+    }
+  );
+});
+
+
 
 // start the server at URL: http://localhost:3000/
 app.listen(3000, () => {
