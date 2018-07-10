@@ -14,7 +14,23 @@ Author: Bryle Castro
 
     <script src="jquery-3.3.1.min.js"></script>
     <script type="text/javascript">
+        
+        // all URLs are relative to http://localhost:3000/
         $(document).ready(() => {
+            
+            /*Clear all search results when respective button is clicked*/
+            $('#clearAllButton').click(() => {
+                console.log("Button Clicked!");
+                $('#statusUsers').empty();
+                $('#statusGroups').empty();
+                $('#statusUsersId').empty();
+                $('#statusUserGroupsGid').empty();
+                $('#statusGroupsQuery').empty();
+                $('#statusUsersQuery').empty();
+                $('#statusUidGroups').empty();
+            });
+            
+            /*Display all users and their respective data to front end*/
             $('#getUsers').click(() => {
                 console.log("Button Clicked!");
                 $.ajax({
@@ -28,6 +44,7 @@ Author: Bryle Castro
                 });
             });
 
+            /*Display all user groups and their respective data to front end*/
             $('#getGroups').click(() => {
                 console.log("Button Clicked!");
                 $.ajax({
@@ -42,6 +59,9 @@ Author: Bryle Castro
 
             });
 
+            /*Display user groups  and their respective data to front end based 
+              on specified optional query parameters user passes
+            */
             $('#getGQ').click(() => {
                 let qGName = $('#queryGroupsName').val();
                 let qGGId = $('#queryGroupsGid').val();
@@ -59,7 +79,9 @@ Author: Bryle Castro
                 });
             });
 
-
+            /*Display user groups  and their respective data to front end based 
+              on specified uid user passes.
+            */
             $('#getUidGroups').click(() => {
                 const requestURL = 'uidGroup/' + $('#uidGroup').val();
                 console.log('making ajax request to:', requestURL);
@@ -78,7 +100,9 @@ Author: Bryle Castro
                 });
             });
 
-
+            /*Display users and their respective data to front end based 
+              on specified uid user passes.
+            */
             $('#getUsersId').click(() => {
                 const requestURL = 'users/' + $('#userIdBox').val();
                 console.log('making ajax request to:', requestURL);
@@ -97,9 +121,30 @@ Author: Bryle Castro
                 });
             });
 
-
-
-
+            /*Display user groups  and their respective data to front end based 
+              on specified gid user passes.
+            */
+             $('#getUserGroupsGid').click(() => {
+                const requestURL = 'userGroups/' + $('#userGroupsGidBox').val();
+                console.log('making ajax request to:', requestURL);
+                // From: http://learn.jquery.com/ajax/jquery-ajax-methods/
+                // Using the core $.ajax() method since it's the most flexible.
+                // ($.get() and $.getJSON() are nicer convenience functions)
+                $.ajax({
+                    // all URLs are relative to http://localhost:3000/
+                    url: requestURL,
+                    type: 'GET',
+                    dataType: 'json', // this URL returns data in JSON format
+                    success: (data) => {
+                        console.log('You received some data!', data);
+                        $('#statusUserGroupsGid').html(JSON.stringify(data));
+                    },
+                });
+            });
+            
+            /*Display users  and their respective data to front end based 
+              on specified optional query parameters.
+            */
             $('#getUsersQuery').click(() => {
                 let qName = $('#queryName').val();
                 let qId = $('#queryId').val();
@@ -151,15 +196,23 @@ Author: Bryle Castro
             flex-direction: column;
         }
 
+        #clearAllButton{
+            margin-right: 15px;
+            margin-top: 15px;
+            display: block;
+            width: 20%;
+            color: red;
+        }
+        
         .myButton {
-            margin-right: 10px;
-            margin-top: 10px;
+            margin-right: 15px;
+            margin-top: 15px;
             display: block;
             float: left;
             box-shadow: inset 0px 1px 0px 0px #ffffff;
             box-shadow: inset 0px 1px 0px 0px #ffffff;
             box-shadow: inset 0px 1px 0px 0px #ffffff;
-            background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ffffff), color-stop(1, #f6f6f6));
+            background: linear, left top, left bottom, color-stop(0.05, #ffffff), color-stop(1, #f6f6f6);
             background: linear-gradient(top, #ffffff 5%, #f6f6f6 100%);
             background: linear-gradient(top, #ffffff 5%, #f6f6f6 100%);
             background: linear-gradient(top, #ffffff 5%, #f6f6f6 100%);
@@ -199,28 +252,40 @@ Author: Bryle Castro
 
 <body>
     <div class="container">
+        <!-- Button and status display for get all users--> 
         <div class="buttonService">
             <button id="getUsers" class="myButton">GET /users</button>
         </div>
         <div class="status" id="statusUsers"></div>
 
+        <!-- Button and status display for all user groups  --> 
         <div class="buttonService">
             <button id="getGroups" class="myButton">GET /groups</button>
         </div>
         <div class="status" id="statusGroups"></div>
 
+        <!-- Button and status display for users based on uid --> 
         <div class="buttonService">
             <button id="getUsersId" class="myButton">GET /users/[uid] </button>
             <input id="userIdBox" class="queryFields" type="text" name="uid" placeholder="UID">
         </div>
         <div class="status" id="statusUsersId"></div>
+        
+        <!-- Button and status display for user groups based on gid --> 
+        <div class="buttonService">
+        <button id="getUserGroupsGid" class="myButton">GET /groups/[gid] </button>
+        <input id="userGroupsGidBox" class="queryFields" type="text" name="uid" placeholder="GID">
+        </div>
+        <div class="status" id="statusUserGroupsGid"></div>
 
+        <!-- Button and status display for user groups based on uid --> 
         <div class="buttonService">
             <button id="getUidGroups" class="myButton">GET /users/[uid]/groups</button>
             <input id="uidGroup" class="queryFields" type="text" name="uid" placeholder="UID">
         </div>
         <div class="status" id="statusUidGroups"></div>
 
+        <!-- Button and status display for user groups based on query params --> 
         <div class="buttonService">
             <button id="getGQ" class="myButton">GET /groups/query?</button>
             <input id="queryGroupsName" class="queryFields" type="text" name="Name" placeholder="NAME">
@@ -229,6 +294,7 @@ Author: Bryle Castro
         </div>
         <div class="status" id="statusGroupsQuery"></div>
 
+        <!-- Button and status display for users based on query params -->  
         <div class="buttonService">
             <button id="getUsersQuery" class="myButton">GET /users/query?</button>
             <input id="queryName" class="queryFields" type="text" name="Name" placeholder="NAME">
@@ -239,11 +305,9 @@ Author: Bryle Castro
             <input id="queryShell" class="queryFields" type="text" name="shell" placeholder="SHELL">
         </div>
         <div class="status" id="statusUsersQuery"></div>
-
-
-
-
-
+        
+        <!-- Button to clear search results --> 
+         <button id="clearAllButton" class="myButton">Clear All Search Results?</button>
     </div>
 </body>
 

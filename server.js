@@ -107,6 +107,35 @@ function getGroups(res, NAME) {
     );
 }
 
+/* Get all the groups for a given gid.*/
+app.get('/userGroups/:usergid', (req, res) => {
+    const gidToLookup = req.params.usergid; // matches ':userid' above
+
+    let error404 = "Error 404: User with uid " + gidToLookup + " not found";
+    var x;
+    // db.all() fetches all results from an SQL query into the 'rows' variable:
+    dbGroups.all(
+
+        'SELECT * FROM groups WHERE gid=$gid',
+        // parameters to SQL query:
+        {
+            $gid: gidToLookup
+        },
+        // callback function to run when the query finishes:
+        (err, rows) => {
+            if (rows.length > 0) {
+               res.send(rows[0])
+            } else {
+                res.send({
+                    error404
+                }); // failed, so return an empty object instead of undefined
+            }
+        }
+    );
+
+});
+
+
 /* Get all the groups for a given uid.*/
 app.get('/uidGroup/:userid', (req, res) => {
     const idToLookup = req.params.userid; // matches ':userid' above
