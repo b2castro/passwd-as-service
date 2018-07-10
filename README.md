@@ -4,11 +4,14 @@ A minimal HTTP service that exposes the user and group information on a UNIX-lik
 - ### Windows Installation (Use the command line that you feel comfortable using; I stuck with windows powershell :) )
   - #### Prerequisites
   1. Install Node.js is you don't have it installed. Heres a tutorial on installing Node.js: https://nodesource.com/blog/installing-nodejs-tutorial-windows/
-  2. git clone https://github.com/b2castro/passwd-as-service.git
-  3. npm install
-  3. npm install -g nodemon
-  4. npm install -g mocha
-  5. npm install sqlite3
+  3. Open up your command line (windows powershell will be enough ).
+  2. Clone the repo using the command: 
+      - git clone https://github.com/b2castro/passwd-as-service.git
+  3. Run the following commands to install packages the application needs: 
+      - npm install
+      - npm install -g nodemon
+      - npm install -g mocha
+      - npm install sqlite3
   
 - ### How To Run Application
   1. Change directory to:  
