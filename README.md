@@ -16,7 +16,7 @@ A minimal HTTP service that exposes the user and group information on a UNIX-lik
 - ### How To Run Application
   1. Change directory to:  
      -  passwd-as-service
-  2. run the server.js file using nodemon with the command: 
+  2. Run the server.js file using nodemon with the command: 
      -  nodemon --watch etc/passwd.txt --watch etc/groups.txt --watch server.js  
      ### Note: --watch allows the server to refresh when any changes are made to passwd.txt or groups.txt while the service is running.
   3. Go to http://localhost:3000/passwdAsService.html to use the application.
