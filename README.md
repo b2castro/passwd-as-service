@@ -21,4 +21,24 @@ A minimal HTTP service that exposes the user and group information on a UNIX-lik
      ### Note: --watch allows the server to refresh when any changes are made to passwd.txt or groups.txt while the service is running.
   3. Go to http://localhost:3000/passwdAsService.html to use the application.
   
-- ### Usage
+- ### Usage Of The Application
+  1. GET /users
+     - Get a list of all users on the system, as defined in the /etc/passwd.txt file and display it on the front end. Press the first button that is located at the top left of the web page.
+
+  #### Example of use and resulting display 
+  ![capture](https://user-images.githubusercontent.com/7214905/42538122-ceedcd34-844b-11e8-9c56-bf910159a96e.PNG)
+  
+  2. GET /groups
+     - Get a list of all groups on the system, a defined by /etc/group.txt file and display it on the front end. This button is located right below the "GET /users" button. 
+ 
+  #### Example of use and resulting display
+  ![capture](https://user-images.githubusercontent.com/7214905/42538317-8127ca9a-844c-11e8-8065-702a3f71efb4.PNG)
+
+  3. GET /users/<uid>
+     - Return a single user with <uid>. Return 404 if <uid> is not found.
+  
+   #### Example of use and resulting display
+   ![capture](https://user-images.githubusercontent.com/7214905/42538556-1b638df6-844d-11e8-870d-205f5d1e10a2.PNG)
+
+
+     
