@@ -1,2 +1,4 @@
 kmem:x:9:
+root:x:0:
+dwoodlins:x:1111:
 wheel:x:0:calebc,maryam,agt,bparent

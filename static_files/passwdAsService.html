@@ -1,192 +1,250 @@
+<!-- 
+File Name: passAsService.html
+
+Description: This file is the webpage that the user will interact with in terms of exposing the user and group information on
+a UNIX-like system that is usually locked away in the UNIX /etc/passwd and /etc/groups files.
+
+Author: Bryle Castro
+
+-->
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-       
-        <script src= "jquery-3.3.1.min.js"></script>
-        <script type="text/javascript">
-         $(document).ready(() => {
-             $('#getUsers').click(() => {
+
+<head>
+
+    <script src="jquery-3.3.1.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(() => {
+            $('#getUsers').click(() => {
                 console.log("Button Clicked!");
                 $.ajax({
-                  url: 'users',
-                  type: 'GET',
-                  dataType : 'json',
-                  success: (data) => {
-                    console.log('You received some data!', data);
-                    $('#statusUsers').html(JSON.stringify(data));  
-                  },
-                }); 
-             });
-             
-              $('#getGroups').click(() => {
+                    url: 'users',
+                    type: 'GET',
+                    dataType: 'json',
+                    success: (data) => {
+                        console.log('You received some data!', data);
+                        $('#statusUsers').html(JSON.stringify(data));
+                    },
+                });
+            });
+
+            $('#getGroups').click(() => {
                 console.log("Button Clicked!");
                 $.ajax({
-                  url: 'groups',
-                  type: 'GET',
-                  dataType : 'json',
-                  success: (data) => {
-                    console.log('You received some data!', data);
-                    $('#statusGroups').html(JSON.stringify(data));  
-                  },
-                }); 
-             });
-             
-          $('#getUsersId').click(() => {
-            const requestURL = 'users/' + $('#userIdBox').val();
-            console.log('making ajax request to:', requestURL);
-            // From: http://learn.jquery.com/ajax/jquery-ajax-methods/
-            // Using the core $.ajax() method since it's the most flexible.
-            // ($.get() and $.getJSON() are nicer convenience functions)
-            $.ajax({
-              // all URLs are relative to http://localhost:3000/
-              url: requestURL,
-              type: 'GET',
-              dataType : 'json', // this URL returns data in JSON format
-              success: (data) => {
-                  console.log('You received some data!', data);
-                  $('#statusUsersId').html(JSON.stringify(data));
-              },
+                    url: 'groups',
+                    type: 'GET',
+                    dataType: 'json',
+                    success: (data) => {
+                        console.log('You received some data!', data);
+                        $('#statusGroups').html(JSON.stringify(data));
+                    },
+                });
+
             });
-          });    
-             
-        
-          $('#getUsersQuery').click(() => {
-            const requestURL = 'users/' + $('#queryName').val() + $('#queryId').val() + $('#queryGid').val() + $('#queryComment').val() + $('#queryHome').val() + $('#queryShell').val();
-            console.log('making ajax request to:', requestURL);
-            // From: http://learn.jquery.com/ajax/jquery-ajax-methods/
-            // Using the core $.ajax() method since it's the most flexible.
-            // ($.get() and $.getJSON() are nicer convenience functions)
-            $.ajax({
-              // all URLs are relative to http://localhost:3000/
-              url: requestURL,
-              type: 'GET',
-              dataType : 'json', // this URL returns data in JSON format
-              success: (data) => {
-                  console.log('You received some data!', data);
-                  $('#statusUsersQuery').html(JSON.stringify(data));
-              },
+
+            $('#getGQ').click(() => {
+                let qGName = $('#queryGroupsName').val();
+                let qGGId = $('#queryGroupsGid').val();
+                let qGMember = $('#queryGroupsMember').val();
+                console.log("Button Clicked!");
+                const requestURL = 'gq?param1=' + qGName + '&param2=' + qGGId + '&param3=' + qGMember;
+                $.ajax({
+                    url: requestURL,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: (data) => {
+                        console.log('You received some data!', data);
+                        $('#statusGroupsQuery').html(JSON.stringify(data));
+                    },
+                });
             });
-          });
-             
-         });
-        </script>
-        <style>
-            #statusUsers{
-                margin: 10px 10px 5px 5px;
-                font-size: 25px;
-            }
-            
-            #statusGroups{
-                margin: 10px 10px 5px 5px;
-                font-size: 25px;
-            }
-            
-            .buttonService{
-                display: flex;
-                flex-direction: row;
-            }
-            .queryFields{
-                display: flex;
-                text-align: center;
-                justify-content: center;
-                
-            }
-            .container{
-                display: flex;
-                float:left;
-                flex-direction: column;
-            }
-            .myButton { 
-            margin-right: 10px;    
+
+
+            $('#getUidGroups').click(() => {
+                const requestURL = 'uidGroup/' + $('#uidGroup').val();
+                console.log('making ajax request to:', requestURL);
+                // From: http://learn.jquery.com/ajax/jquery-ajax-methods/
+                // Using the core $.ajax() method since it's the most flexible.
+                // ($.get() and $.getJSON() are nicer convenience functions)
+                $.ajax({
+                    // all URLs are relative to http://localhost:3000/
+                    url: requestURL,
+                    type: 'GET',
+                    dataType: 'json', // this URL returns data in JSON format
+                    success: (data) => {
+                        console.log('You received some data!', data);
+                        $('#statusUidGroups').html(JSON.stringify(data));
+                    },
+                });
+            });
+
+
+            $('#getUsersId').click(() => {
+                const requestURL = 'users/' + $('#userIdBox').val();
+                console.log('making ajax request to:', requestURL);
+                // From: http://learn.jquery.com/ajax/jquery-ajax-methods/
+                // Using the core $.ajax() method since it's the most flexible.
+                // ($.get() and $.getJSON() are nicer convenience functions)
+                $.ajax({
+                    // all URLs are relative to http://localhost:3000/
+                    url: requestURL,
+                    type: 'GET',
+                    dataType: 'json', // this URL returns data in JSON format
+                    success: (data) => {
+                        console.log('You received some data!', data);
+                        $('#statusUsersId').html(JSON.stringify(data));
+                    },
+                });
+            });
+
+
+
+
+            $('#getUsersQuery').click(() => {
+                let qName = $('#queryName').val();
+                let qId = $('#queryId').val();
+                let qGid = $('#queryGid').val();
+                let qComment = $('#queryComment').val();
+                let qHome = $('#queryHome').val();
+                let qShell = $('#queryShell').val();
+
+                const requestURL = 'query?param1=' + qName + '&param2=' + qId + '&param3=' + qGid + '&param4=' + qComment + '&param5=' + qHome + '&param6=' + qShell;
+                console.log('making ajax request to:', requestURL);
+                // From: http://learn.jquery.com/ajax/jquery-ajax-methods/
+                // Using the core $.ajax() method since it's the most flexible.
+                // ($.get() and $.getJSON() are nicer convenience functions)
+                $.ajax({
+                    // all URLs are relative to http://localhost:3000/
+                    url: requestURL,
+                    type: 'GET',
+                    dataType: 'json', // this URL returns data in JSON format
+                    success: (data) => {
+                        console.log('You received some data!', data);
+                        $('#statusUsersQuery').html(JSON.stringify(data));
+                    },
+                });
+            });
+
+        });
+    </script>
+    <style>
+        .status {
+            margin: 10px 10px 5px 5px;
+            font-size: 25px;
+        }
+
+        .buttonService {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .queryFields {
+            display: flex;
+            text-align: center;
+            justify-content: center;
+
+        }
+
+        .container {
+            display: flex;
+            float: left;
+            flex-direction: column;
+        }
+
+        .myButton {
+            margin-right: 10px;
             margin-top: 10px;
-            display:block;
-            float:left;    
-            box-shadow:inset 0px 1px 0px 0px #ffffff;
-            box-shadow:inset 0px 1px 0px 0px #ffffff;
-            box-shadow:inset 0px 1px 0px 0px #ffffff;
-            background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ffffff), color-stop(1, #f6f6f6));
-            background:linear-gradient(top, #ffffff 5%, #f6f6f6 100%);
-            background:linear-gradient(top, #ffffff 5%, #f6f6f6 100%);
-            background:linear-gradient(top, #ffffff 5%, #f6f6f6 100%);
-            background:linear-gradient(top, #ffffff 5%, #f6f6f6 100%);
-            background:linear-gradient(to bottom, #ffffff 5%, #f6f6f6 100%);
-            background-color:#ffffff;
-            border-radius:6px;
-            border-radius:6px;
-            border-radius:6px;
-            border:1px solid #dcdcdc;
-            display:inline-block;
-            cursor:pointer;
-            color:#666666;
-            font-family:Courier New;
-            font-size:100%;
-            font-weight:bold;
-            padding:5px 24px;
-            text-decoration:none;
-            text-shadow:0px 1px 0px #ffffff;
+            display: block;
+            float: left;
+            box-shadow: inset 0px 1px 0px 0px #ffffff;
+            box-shadow: inset 0px 1px 0px 0px #ffffff;
+            box-shadow: inset 0px 1px 0px 0px #ffffff;
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ffffff), color-stop(1, #f6f6f6));
+            background: linear-gradient(top, #ffffff 5%, #f6f6f6 100%);
+            background: linear-gradient(top, #ffffff 5%, #f6f6f6 100%);
+            background: linear-gradient(top, #ffffff 5%, #f6f6f6 100%);
+            background: linear-gradient(top, #ffffff 5%, #f6f6f6 100%);
+            background: linear-gradient(to bottom, #ffffff 5%, #f6f6f6 100%);
+            background-color: #ffffff;
+            border-radius: 6px;
+            border-radius: 6px;
+            border-radius: 6px;
+            border: 1px solid #dcdcdc;
+            display: inline-block;
+            cursor: pointer;
+            color: #666666;
+            font-family: Courier New;
+            font-size: 100%;
+            font-weight: bold;
+            padding: 5px 24px;
+            text-decoration: none;
+            text-shadow: 0px 1px 0px #ffffff;
         }
+
         .myButton:hover {
-            background:linear-gradient(top, #f6f6f6 5%, #ffffff 100%);
-            background:linear-gradient(top, #f6f6f6 5%, #ffffff 100%);
-            background:linear-gradient(top, #f6f6f6 5%, #ffffff 100%);
-            background:linear-gradient(top, #f6f6f6 5%, #ffffff 100%);
-            background:linear-gradient(to bottom, #f6f6f6 5%, #ffffff 100%);
-            background-color:#f6f6f6;
+            background: linear-gradient(top, #f6f6f6 5%, #ffffff 100%);
+            background: linear-gradient(top, #f6f6f6 5%, #ffffff 100%);
+            background: linear-gradient(top, #f6f6f6 5%, #ffffff 100%);
+            background: linear-gradient(top, #f6f6f6 5%, #ffffff 100%);
+            background: linear-gradient(to bottom, #f6f6f6 5%, #ffffff 100%);
+            background-color: #f6f6f6;
         }
+
         .myButton:active {
-            position:relative;
-            top:1px;
+            position: relative;
+            top: 1px;
         }
-        </style>
-    </head>
-    <body>
-        <div class="container">
-             <div class="buttonService">
-             <button id="getUsers" class="myButton">GET /users</button>     
-             </div> 
-             <div id="statusUsers"></div>
-            
-             <div class="buttonService">   
-             <button id="getGroups" class="myButton">GET /groups</button>
-             </div>
-            <div id="statusGroups"></div>
-            
-              <div class="buttonService">
-             <button id="getUsersId" class="myButton">GET /users/[uid] </button> 
-             <input id="userIdBox" class="queryFields" type="text" name="uid"  placeholder="UID">     
-             </div> 
-             <div id="statusUsersId"></div> 
-            
-              <div class="buttonService">   
-             <button id="getGroups" class="myButton">GET /users/[uid]/groups</button>
-             <input class="queryFields" type="text" name="uid"  placeholder="UID">
-             </div> 
-             <div id="statusGroups"></div>
-            
-            <div class="buttonService">   
-             <button id="getGroups" class="myButton">GET /groups/query</button>
-             <input class="queryFields" type="text" name="Name"  placeholder="NAME">
-             <input class="queryFields" type="text" name="gid"  placeholder="GID">
-             <input class="queryFields" type="text" name="member"  placeholder="MEMBER">
-             </div> 
-             <div id="statusGroups"></div>
-            
-              <div class="buttonService">
-             <button id="getUsersQuery" class="myButton">GET /users/query</button> 
-             <input id="queryName" class="queryFields" type="text" name="Name"  placeholder="NAME">
-             <input id="queryId" class="queryFields" type="text" name="uid"  placeholder="UID">
-             <input id="queryGid" class="queryFields" type="text" name="gid"  placeholder="GID">
-             <input id="queryComment" class="queryFields" type="text" name="comment"  placeholder="COMMENT">
-             <input id="queryHome" class="queryFields" type="text" name="home"  placeholder="HOME">
-             <input id="queryShell" class="queryFields" type="text" name="shell"  placeholder="SHELL">     
-             </div> 
-             <div id="statusUsersQuery"></div>
-            
-            
-            
-            
-            
-             
-        </div>    
-    </body>
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="buttonService">
+            <button id="getUsers" class="myButton">GET /users</button>
+        </div>
+        <div class="status" id="statusUsers"></div>
+
+        <div class="buttonService">
+            <button id="getGroups" class="myButton">GET /groups</button>
+        </div>
+        <div class="status" id="statusGroups"></div>
+
+        <div class="buttonService">
+            <button id="getUsersId" class="myButton">GET /users/[uid] </button>
+            <input id="userIdBox" class="queryFields" type="text" name="uid" placeholder="UID">
+        </div>
+        <div class="status" id="statusUsersId"></div>
+
+        <div class="buttonService">
+            <button id="getUidGroups" class="myButton">GET /users/[uid]/groups</button>
+            <input id="uidGroup" class="queryFields" type="text" name="uid" placeholder="UID">
+        </div>
+        <div class="status" id="statusUidGroups"></div>
+
+        <div class="buttonService">
+            <button id="getGQ" class="myButton">GET /groups/query?</button>
+            <input id="queryGroupsName" class="queryFields" type="text" name="Name" placeholder="NAME">
+            <input id="queryGroupsGid" class="queryFields" type="text" name="gid" placeholder="GID">
+            <input id="queryGroupsMember" class="queryFields" type="text" name="member" placeholder="MEMBER">
+        </div>
+        <div class="status" id="statusGroupsQuery"></div>
+
+        <div class="buttonService">
+            <button id="getUsersQuery" class="myButton">GET /users/query?</button>
+            <input id="queryName" class="queryFields" type="text" name="Name" placeholder="NAME">
+            <input id="queryId" class="queryFields" type="text" name="uid" placeholder="UID">
+            <input id="queryGid" class="queryFields" type="text" name="gid" placeholder="GID">
+            <input id="queryComment" class="queryFields" type="text" name="comment" placeholder="COMMENT">
+            <input id="queryHome" class="queryFields" type="text" name="home" placeholder="HOME">
+            <input id="queryShell" class="queryFields" type="text" name="shell" placeholder="SHELL">
+        </div>
+        <div class="status" id="statusUsersQuery"></div>
+
+
+
+
+
+    </div>
+</body>
+
 </html>
