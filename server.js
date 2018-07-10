@@ -26,6 +26,12 @@ var lineReader = require('readline').createInterface({
 });
 lineReader.on('line', function(line) {
     let str = line;
+    
+    if (/\s/.test(str)) {
+        throw 'etc/passwd file is malformed';
+        // It has any kind of whitespace
+    }
+
     let array = str.split(':');
 
     db.prepare("INSERT OR REPLACE INTO users (name,uid,gid,comment,home,shell) VALUES(?,?,?,?,?,?)").run(array[0], array[2], array[3], array[4], array[5], array[6]).finalize();
@@ -39,6 +45,10 @@ var lineReaderGroups = require('readline').createInterface({
 lineReaderGroups.on('line', function(line) {
     let str = line;
     let array = str.split(':');
+     if (/\s/.test(str)) {
+        throw 'etc/groups file is malformed';
+         // It has any kind of whitespace
+    }
 
     dbGroups.prepare("INSERT OR REPLACE INTO groups (name,gid,member) VALUES(?,?,?)").run(array[0], array[2], array[3]).finalize();
 });
@@ -108,10 +118,10 @@ function getGroups(res, NAME) {
 }
 
 /* Get all the groups for a given gid.*/
-app.get('/userGroups/:usergid', (req, res) => {
+app.get('/groups/:usergid', (req, res) => {
     const gidToLookup = req.params.usergid; // matches ':userid' above
 
-    let error404 = "Error 404: User with uid " + gidToLookup + " not found";
+    let error404 = "Error 404: User with gid " + gidToLookup + " not found";
     var x;
     // db.all() fetches all results from an SQL query into the 'rows' variable:
     dbGroups.all(
