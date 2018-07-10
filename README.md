@@ -10,9 +10,12 @@ A minimal HTTP service that exposes the user and group information on a UNIX-lik
   4. npm install -g mocha
   5. npm install sqlite3
   
-- ### Usage
+- ### How To Run Application
   1. Change directory to:  
      -  passwd-as-service
   2. run the server.js file using nodemon with the command: 
      -  nodemon --watch etc/passwd.txt --watch etc/groups.txt --watch server.js  
      ### Note: --watch allows the server to refresh when any changes are made to passwd.txt or groups.txt while the service is running.
+  3. Go to http://localhost:3000/passwdAsService.html to use the application.
+  
+- ### Usage
