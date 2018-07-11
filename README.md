@@ -10,7 +10,6 @@ A minimal HTTP service that exposes the user and group information on a UNIX-lik
   3. Run the following commands to install packages the application needs: 
       - npm install
       - npm install -g nodemon
-      - npm install -g mocha
       - npm install sqlite3
   
 - ### How To Run Application
