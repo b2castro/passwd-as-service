@@ -13,11 +13,12 @@ Author: Bryle Castro
 <head>
 
     <script src="jquery-3.3.1.min.js"></script>
+    <script src="service-and-test.js"></script>
     <script type="text/javascript">
+        
         
         // all URLs are relative to http://localhost:3000/
         $(document).ready(() => {
-            
             /*Clear all search results when respective button is clicked*/
             $('#clearAllButton').click(() => {
                 console.log("Button Clicked!");
@@ -33,29 +34,15 @@ Author: Bryle Castro
             /*Display all users and their respective data to front end*/
             $('#getUsers').click(() => {
                 console.log("Button Clicked!");
-                $.ajax({
-                    url: 'users',
-                    type: 'GET',
-                    dataType: 'json',
-                    success: (data) => {
-                        console.log('You received some data!', data);
-                        $('#statusUsers').html(JSON.stringify(data));
-                    },
-                });
+                getData('/users','#statusUsers');
+                
+                
             });
 
             /*Display all user groups and their respective data to front end*/
             $('#getGroups').click(() => {
                 console.log("Button Clicked!");
-                $.ajax({
-                    url: 'groups',
-                    type: 'GET',
-                    dataType: 'json',
-                    success: (data) => {
-                        console.log('You received some data!', data);
-                        $('#statusGroups').html(JSON.stringify(data));
-                    },
-                });
+                getData('/groups','#statusGroups');
 
             });
 
@@ -66,17 +53,8 @@ Author: Bryle Castro
                 let qGName = $('#queryGroupsName').val();
                 let qGGId = $('#queryGroupsGid').val();
                 let qGMember = $('#queryGroupsMember').val();
-                console.log("Button Clicked!");
                 const requestURL = 'gq?param1=' + qGName + '&param2=' + qGGId + '&param3=' + qGMember;
-                $.ajax({
-                    url: requestURL,
-                    type: 'GET',
-                    dataType: 'json',
-                    success: (data) => {
-                        console.log('You received some data!', data);
-                        $('#statusGroupsQuery').html(JSON.stringify(data));
-                    },
-                });
+                getData(requestURL,'#statusGroupsQuery');
             });
 
             /*Display user groups  and their respective data to front end based 
@@ -88,16 +66,8 @@ Author: Bryle Castro
                 // From: http://learn.jquery.com/ajax/jquery-ajax-methods/
                 // Using the core $.ajax() method since it's the most flexible.
                 // ($.get() and $.getJSON() are nicer convenience functions)
-                $.ajax({
-                    // all URLs are relative to http://localhost:3000/
-                    url: requestURL,
-                    type: 'GET',
-                    dataType: 'json', // this URL returns data in JSON format
-                    success: (data) => {
-                        console.log('You received some data!', data);
-                        $('#statusUidGroups').html(JSON.stringify(data));
-                    },
-                });
+                getData(requestURL,'#statusUidGroups');
+               
             });
 
             /*Display users and their respective data to front end based 
@@ -109,16 +79,7 @@ Author: Bryle Castro
                 // From: http://learn.jquery.com/ajax/jquery-ajax-methods/
                 // Using the core $.ajax() method since it's the most flexible.
                 // ($.get() and $.getJSON() are nicer convenience functions)
-                $.ajax({
-                    // all URLs are relative to http://localhost:3000/
-                    url: requestURL,
-                    type: 'GET',
-                    dataType: 'json', // this URL returns data in JSON format
-                    success: (data) => {
-                        console.log('You received some data!', data);
-                        $('#statusUsersId').html(JSON.stringify(data));
-                    },
-                });
+                getData(requestURL,'#statusUsersId');
             });
 
             /*Display user groups  and their respective data to front end based 
@@ -130,16 +91,7 @@ Author: Bryle Castro
                 // From: http://learn.jquery.com/ajax/jquery-ajax-methods/
                 // Using the core $.ajax() method since it's the most flexible.
                 // ($.get() and $.getJSON() are nicer convenience functions)
-                $.ajax({
-                    // all URLs are relative to http://localhost:3000/
-                    url: requestURL,
-                    type: 'GET',
-                    dataType: 'json', // this URL returns data in JSON format
-                    success: (data) => {
-                        console.log('You received some data!', data);
-                        $('#statusUserGroupsGid').html(JSON.stringify(data));
-                    },
-                });
+                getData(requestURL,'#statusUidGroups');
             });
             
             /*Display users  and their respective data to front end based 
@@ -158,16 +110,7 @@ Author: Bryle Castro
                 // From: http://learn.jquery.com/ajax/jquery-ajax-methods/
                 // Using the core $.ajax() method since it's the most flexible.
                 // ($.get() and $.getJSON() are nicer convenience functions)
-                $.ajax({
-                    // all URLs are relative to http://localhost:3000/
-                    url: requestURL,
-                    type: 'GET',
-                    dataType: 'json', // this URL returns data in JSON format
-                    success: (data) => {
-                        console.log('You received some data!', data);
-                        $('#statusUsersQuery').html(JSON.stringify(data));
-                    },
-                });
+                getData(requestURL,'#statusUsersQuery');
             });
 
         });

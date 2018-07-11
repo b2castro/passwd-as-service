@@ -10,7 +10,6 @@
 const express = require('express');
 const app = express();
 
-
 // use this library to interface with SQLite databases: https://github.com/mapbox/node-sqlite3
 const sqlite3 = require('sqlite3');
 const db = new sqlite3.Database('users.db');
@@ -52,6 +51,7 @@ lineReaderGroups.on('line', function(line) {
 
     dbGroups.prepare("INSERT OR REPLACE INTO groups (name,gid,member) VALUES(?,?,?)").run(array[0], array[2], array[3]).finalize();
 });
+
 
 
 /* Get a list of all groups on the system, a defined by /etc/group.txt */
@@ -307,7 +307,9 @@ app.get('/gq', (req, res) => {
 });
 
 
+
 // start the server at URL: http://localhost:3000/
 app.listen(3000, () => {
     console.log('Server started at http://localhost:3000/');
+    
 });
